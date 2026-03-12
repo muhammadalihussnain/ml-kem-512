@@ -6,7 +6,8 @@ against NIST FIPS 202 test vectors.
 """
 
 import pytest
-from ml_kem_512.primitives.hash import shake128, shake256, sha3_256, sha3_512
+
+from ml_kem_512.primitives.hash import sha3_256, sha3_512, shake128, shake256
 
 
 class TestSHAKE128:
