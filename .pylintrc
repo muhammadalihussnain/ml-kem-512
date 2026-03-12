@@ -1,0 +1,22 @@
+[MASTER]
+jobs=0
+persistent=yes
+suggestion-mode=yes
+
+[MESSAGES CONTROL]
+disable=
+    C0103,  # Invalid name
+    C0114,  # Missing module docstring
+    R0913,  # Too many arguments
+    R0914,  # Too many local variables
+
+[FORMAT]
+max-line-length=100
+indent-string='    '
+
+[BASIC]
+good-names=i,j,k,n,q,A,s,e,t,u,v,m,r,x,y,z
+
+[DESIGN]
+max-args=10
+max-attributes=15
