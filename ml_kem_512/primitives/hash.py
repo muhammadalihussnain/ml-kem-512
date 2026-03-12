@@ -12,11 +12,11 @@ from typing import Union
 def shake128(data: bytes, output_length: int) -> bytes:
     """
     SHAKE-128 extendable output function.
-    
+
     Args:
         data: Input bytes to hash
         output_length: Desired output length in bytes
-        
+
     Returns:
         output_length bytes of pseudorandom output
     """
@@ -28,11 +28,11 @@ def shake128(data: bytes, output_length: int) -> bytes:
 def shake256(data: bytes, output_length: int) -> bytes:
     """
     SHAKE-256 extendable output function.
-    
+
     Args:
         data: Input bytes to hash
         output_length: Desired output length in bytes
-        
+
     Returns:
         output_length bytes of pseudorandom output
     """
@@ -44,10 +44,10 @@ def shake256(data: bytes, output_length: int) -> bytes:
 def sha3_256(data: bytes) -> bytes:
     """
     SHA3-256 hash function.
-    
+
     Args:
         data: Input bytes to hash
-        
+
     Returns:
         32 bytes (256 bits) hash output
     """
@@ -57,10 +57,10 @@ def sha3_256(data: bytes) -> bytes:
 def sha3_512(data: bytes) -> bytes:
     """
     SHA3-512 hash function.
-    
+
     Args:
         data: Input bytes to hash
-        
+
     Returns:
         64 bytes (512 bits) hash output
     """
