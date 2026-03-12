@@ -6,7 +6,6 @@ of FIPS 202 (SHA-3 and SHAKE) functions used in ML-KEM.
 """
 
 import hashlib
-from typing import Union
 
 
 def shake128(data: bytes, output_length: int) -> bytes:

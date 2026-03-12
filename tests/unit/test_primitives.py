@@ -5,8 +5,6 @@ Tests SHAKE-128, SHAKE-256, SHA3-256, and SHA3-512 implementations
 against NIST FIPS 202 test vectors.
 """
 
-import pytest
-
 from ml_kem_512.primitives.hash import sha3_256, sha3_512, shake128, shake256
 
 
