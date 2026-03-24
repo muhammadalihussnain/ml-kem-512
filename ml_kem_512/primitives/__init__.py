@@ -3,6 +3,7 @@ Cryptographic primitives for ML-KEM-512.
 """
 
 from ml_kem_512.primitives.hash import sha3_256, sha3_512, shake128, shake256
+from ml_kem_512.primitives.kdf import G, H, J
 from ml_kem_512.primitives.prf import XOF, prf, xof
 
 __all__ = [
@@ -13,4 +14,7 @@ __all__ = [
     "prf",
     "xof",
     "XOF",
+    "H",
+    "G",
+    "J",
 ]
