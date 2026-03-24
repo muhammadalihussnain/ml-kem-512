@@ -20,7 +20,6 @@ import hashlib
 
 from ml_kem_512.primitives.kdf import G, H, J
 
-
 # ---------------------------------------------------------------------------
 # Reference implementations (raw hashlib, no abstraction layer)
 # ---------------------------------------------------------------------------
@@ -57,16 +56,12 @@ class TestH:
 
     def test_empty_input(self):
         """H matches SHA3-256 NIST vector for empty input."""
-        expected = bytes.fromhex(
-            "a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a"
-        )
+        expected = bytes.fromhex("a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a")
         assert H(b"") == expected
 
     def test_known_vector(self):
         """H matches SHA3-256 NIST vector for 'abc'."""
-        expected = bytes.fromhex(
-            "3a985da74fe225b2045c172d6bd390bd855f086e3e9d525b46bfe24511431532"
-        )
+        expected = bytes.fromhex("3a985da74fe225b2045c172d6bd390bd855f086e3e9d525b46bfe24511431532")
         assert H(b"abc") == expected
 
     def test_deterministic(self):
