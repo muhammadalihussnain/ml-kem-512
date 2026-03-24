@@ -20,10 +20,10 @@ import pytest
 
 from ml_kem_512.primitives.prf import XOF, prf, xof
 
-
 # ---------------------------------------------------------------------------
 # Helpers — ground-truth reference implementations (no abstraction)
 # ---------------------------------------------------------------------------
+
 
 def _ref_prf(s: bytes, b: int, length: int) -> bytes:
     """Raw SHAKE-256(s || b) — used to cross-verify prf()."""
@@ -45,6 +45,7 @@ def _ref_xof(rho: bytes, i: int, j: int, length: int) -> bytes:
 # ---------------------------------------------------------------------------
 # PRF Tests
 # ---------------------------------------------------------------------------
+
 
 class TestPRF:
     """Tests for PRF(s, b) — SHAKE-256 based pseudorandom function."""
@@ -127,6 +128,7 @@ class TestPRF:
 # ---------------------------------------------------------------------------
 # XOF Tests
 # ---------------------------------------------------------------------------
+
 
 class TestXOF:
     """Tests for XOF(ρ, i, j) — SHAKE-128 based extendable output function."""
