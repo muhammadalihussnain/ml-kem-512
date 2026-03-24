@@ -10,6 +10,8 @@ points in the ML-KEM protocol:
   J(x) = SHAKE-256(x)  -- derive final 32-byte shared secret K
 """
 
+from __future__ import annotations
+
 import hashlib
 
 
