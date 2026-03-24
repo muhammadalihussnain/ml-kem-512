@@ -26,7 +26,7 @@ def prf(s: bytes, b: int, output_length: int) -> bytes:
     """
     if len(s) != 32:
         raise ValueError(f"PRF seed must be 32 bytes, got {len(s)}")
-    if not (0 <= b <= 255):
+    if b < 0 or b > 255:
         raise ValueError(f"PRF counter b must be in [0, 255], got {b}")
 
     shake = hashlib.shake_256()
@@ -58,11 +58,12 @@ class XOF:
         """
         if len(rho) != 32:
             raise ValueError(f"XOF seed rho must be 32 bytes, got {len(rho)}")
-        if not (0 <= i <= 255):
+        if i < 0 or i > 255:
             raise ValueError(f"XOF index i must be in [0, 255], got {i}")
-        if not (0 <= j <= 255):
+        if j < 0 or j > 255:
             raise ValueError(f"XOF index j must be in [0, 255], got {j}")
 
+        self._rho = rho
         self._shake = hashlib.shake_128()
         self._shake.update(rho)
         self._shake.update(bytes([i]))
@@ -79,6 +80,15 @@ class XOF:
             n bytes of pseudorandom output
         """
         return self._shake.digest(n)
+
+    def seed(self) -> bytes:
+        """
+        Return the 32-byte seed used to initialize this XOF stream.
+
+        Returns:
+            The rho seed bytes
+        """
+        return self._rho
 
 
 def xof(rho: bytes, i: int, j: int, output_length: int) -> bytes:

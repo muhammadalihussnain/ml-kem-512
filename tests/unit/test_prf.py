@@ -219,3 +219,8 @@ class TestXOF:
         xof_out = xof(seed, 0, 0, 64)
         prf_out = prf(seed, 0, 64)
         assert xof_out != prf_out
+
+    def test_seed_returns_rho(self):
+        """XOF.seed() returns the original rho used to initialize the stream."""
+        stream = XOF(self.RHO, 0, 0)
+        assert stream.seed() == self.RHO
