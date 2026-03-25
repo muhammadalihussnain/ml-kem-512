@@ -13,7 +13,7 @@ Tests cover:
 
 import pytest
 
-from ml_kem_512.polynomial.poly import N, Q, Polynomial, one_poly, zero_poly
+from ml_kem_512.polynomial.poly import N, Polynomial, Q, one_poly, zero_poly
 
 # ---------------------------------------------------------------------------
 # Construction tests
