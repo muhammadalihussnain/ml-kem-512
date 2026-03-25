@@ -8,6 +8,7 @@ from ml_kem_512.pke.keygen import (
     decode_secret_key,
     encode_public_key,
     encode_secret_key,
+    keygen_pke,
     sample_error_vector,
     sample_secret_vector,
 )
@@ -22,4 +23,5 @@ __all__ = [
     "encode_secret_key",
     "decode_public_key",
     "decode_secret_key",
+    "keygen_pke",
 ]

@@ -3,20 +3,13 @@ K-PKE Key Generation components for ML-KEM-512.
 
 Implements FIPS 203 Section 5.1 K-PKE.KeyGen steps:
 
-  Step 3-4: Secret vector s
-    s[i] = CBD_eta1(PRF(sigma, i))   for i in 0..k-1
-    s_hat = NTT(s)
-
-  Step 5-6: Error vector e
-    e[i] = CBD_eta1(PRF(sigma, k+i)) for i in 0..k-1
-    e_hat = NTT(e)
-
-  Step 7: Public key t_hat
-    t_hat = A_hat * s_hat + e_hat
-
-  Step 8: Encode keys
-    pk = ByteEncode_12(t_hat) || rho   (800 bytes)
-    sk = ByteEncode_12(s_hat)          (768 bytes)
+  Step 1-2: Expand seed d -> (rho, sigma) = G(d || k)
+  Step 2:   Generate matrix A from rho
+  Step 3-4: Secret vector s[i] = CBD_eta1(PRF(sigma, i)), s_hat = NTT(s)
+  Step 5-6: Error vector  e[i] = CBD_eta1(PRF(sigma, k+i)), e_hat = NTT(e)
+  Step 7:   t_hat = A_hat * s_hat + e_hat
+  Step 8:   ek = ByteEncode_12(t_hat) || rho  (800 bytes)
+            dk = ByteEncode_12(s_hat)          (768 bytes)
 """
 
 from __future__ import annotations
@@ -150,3 +143,43 @@ def decode_secret_key(dk: bytes) -> PolyVec:
         chunk = dk[i * 384 : (i + 1) * 384]
         polys.append(Polynomial(byte_decode(12, chunk)))
     return PolyVec(polys)
+
+
+def keygen_pke(d: bytes) -> tuple:
+    """
+    K-PKE.KeyGen(d) — FIPS 203 Section 5.1 complete key generation.
+
+    Args:
+        d: 32-byte random seed
+
+    Returns:
+        (ek, dk): encoded public key (800 bytes), encoded secret key (768 bytes)
+    """
+    if len(d) != 32:
+        raise ValueError(f"Seed d must be 32 bytes, got {len(d)}")
+
+    from ml_kem_512.pke.matrix import generate_matrix
+    from ml_kem_512.primitives.kdf import G
+
+    # Step 1: expand seed -> (rho, sigma)
+    rho, sigma = G(d + bytes([K]))
+
+    # Step 2: generate matrix A in NTT domain
+    A_hat = generate_matrix(rho)
+
+    # Steps 3-4: sample secret vector, transform to NTT
+    s = sample_secret_vector(sigma)
+    s_hat = ntt_vec(s)
+
+    # Steps 5-6: sample error vector, transform to NTT
+    e = sample_error_vector(sigma)
+    e_hat = ntt_vec(e)
+
+    # Step 7: compute public key t_hat = A*s + e
+    t_hat = compute_public_key_ntt(A_hat, s_hat, e_hat)
+
+    # Step 8: encode keys
+    ek = encode_public_key(t_hat, rho)
+    dk = encode_secret_key(s_hat)
+
+    return ek, dk
