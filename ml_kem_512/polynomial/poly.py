@@ -54,6 +54,32 @@ class Polynomial:
         """Additive inverse: -p mod q."""
         return Polynomial([(-c) % Q for c in self.coeffs])
 
+    def __mul__(self, other: Polynomial) -> Polynomial:
+        """
+        Schoolbook multiplication in R_q = Z_q[x] / (x^256 + 1).
+
+        For each pair of terms a*x^i and b*x^j:
+          - If i+j < N  : contributes  a*b to coefficient i+j
+          - If i+j >= N : contributes -a*b to coefficient (i+j-N)
+            because x^N ≡ -1 (mod x^N + 1)
+
+        Complexity: O(N^2) — schoolbook, replaced by NTT in milestone 2.3.
+        """
+        result = [0] * N
+        for i in range(N):
+            if self.coeffs[i] == 0:
+                continue
+            for j in range(N):
+                if other.coeffs[j] == 0:
+                    continue
+                idx = i + j
+                if idx < N:
+                    result[idx] = (result[idx] + self.coeffs[i] * other.coeffs[j]) % Q
+                else:
+                    # x^N ≡ -1  =>  subtract instead of add
+                    result[idx - N] = (result[idx - N] - self.coeffs[i] * other.coeffs[j]) % Q
+        return Polynomial(result)
+
     # ------------------------------------------------------------------
     # Comparison / helpers
     # ------------------------------------------------------------------
