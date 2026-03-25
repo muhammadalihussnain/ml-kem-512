@@ -15,7 +15,6 @@ import pytest
 
 from ml_kem_512.polynomial.poly import N, Q, Polynomial, one_poly, zero_poly
 
-
 # ---------------------------------------------------------------------------
 # Construction tests
 # ---------------------------------------------------------------------------
@@ -51,10 +50,10 @@ class TestConstruction:
     def test_coefficients_reduced_mod_q(self):
         """Coefficients are automatically reduced into [0, Q-1]."""
         p = Polynomial([Q, Q + 1, -1, -Q])
-        assert p[0] == 0          # Q mod Q = 0
-        assert p[1] == 1          # (Q+1) mod Q = 1
-        assert p[2] == Q - 1      # -1 mod Q = Q-1
-        assert p[3] == 0          # -Q mod Q = 0
+        assert p[0] == 0  # Q mod Q = 0
+        assert p[1] == 1  # (Q+1) mod Q = 1
+        assert p[2] == Q - 1  # -1 mod Q = Q-1
+        assert p[3] == 0  # -Q mod Q = 0
 
     def test_too_many_coefficients_raises(self):
         """More than N coefficients raises ValueError."""

@@ -34,9 +34,7 @@ class Polynomial:
             self.coeffs = [0] * N
         else:
             if len(coeffs) > N:
-                raise ValueError(
-                    f"Polynomial has at most {N} coefficients, got {len(coeffs)}"
-                )
+                raise ValueError(f"Polynomial has at most {N} coefficients, got {len(coeffs)}")
             # zero-pad and reduce each coefficient into [0, Q-1]
             self.coeffs = [int(c) % Q for c in coeffs] + [0] * (N - len(coeffs))
 
@@ -46,15 +44,11 @@ class Polynomial:
 
     def __add__(self, other: Polynomial) -> Polynomial:
         """Coefficient-wise addition mod q."""
-        return Polynomial(
-            [(self.coeffs[i] + other.coeffs[i]) % Q for i in range(N)]
-        )
+        return Polynomial([(self.coeffs[i] + other.coeffs[i]) % Q for i in range(N)])
 
     def __sub__(self, other: Polynomial) -> Polynomial:
         """Coefficient-wise subtraction mod q."""
-        return Polynomial(
-            [(self.coeffs[i] - other.coeffs[i]) % Q for i in range(N)]
-        )
+        return Polynomial([(self.coeffs[i] - other.coeffs[i]) % Q for i in range(N)])
 
     def __neg__(self) -> Polynomial:
         """Additive inverse: -p mod q."""
@@ -71,9 +65,7 @@ class Polynomial:
 
     def __repr__(self) -> str:
         # show only non-zero coefficients for readability
-        terms = [
-            (i, c) for i, c in enumerate(self.coeffs) if c != 0
-        ]
+        terms = [(i, c) for i, c in enumerate(self.coeffs) if c != 0]
         if not terms:
             return "Polynomial(0)"
         return f"Polynomial({terms[:8]}{'...' if len(terms) > 8 else ''})"
