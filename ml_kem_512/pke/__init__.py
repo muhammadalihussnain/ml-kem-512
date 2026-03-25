@@ -2,6 +2,7 @@
 K-PKE (public-key encryption scheme) for ML-KEM-512.
 """
 
+from ml_kem_512.pke.encrypt import decode_ciphertext, encrypt_pke
 from ml_kem_512.pke.keygen import (
     compute_public_key_ntt,
     decode_public_key,
@@ -24,4 +25,6 @@ __all__ = [
     "decode_public_key",
     "decode_secret_key",
     "keygen_pke",
+    "encrypt_pke",
+    "decode_ciphertext",
 ]
