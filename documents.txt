@@ -1,0 +1,8 @@
+
+
+
+
+now we have come to know that the shake-128 or shake-256 are used for the randomness. they both provide the variable 
+length string for determining the seeding for the randomness. while sha3-256 and sha3-512 are the methods for the 
+security. both are used for the security purpose of fixed length. they are used for the derivation of the secret key
+from a master secret.
